@@ -3,7 +3,7 @@
 
 # # Import
 
-# In[13]:
+# In[1]:
 
 
 import _pickle
@@ -30,7 +30,7 @@ from sklearn.tree import DecisionTreeClassifier
 
 # # GV and Func
 
-# In[14]:
+# In[2]:
 
 
 def specificity(y_true, y_pred):
@@ -50,7 +50,7 @@ scoring = {
 }
 
 
-# In[15]:
+# In[3]:
 
 
 clfs = {
@@ -92,7 +92,7 @@ clfs = {
 }
 
 
-# In[16]:
+# In[4]:
 
 
 skf = StratifiedKFold(
@@ -101,7 +101,7 @@ skf = StratifiedKFold(
     shuffle=True)
 
 
-# In[17]:
+# In[5]:
 
 
 def CV(X, y, model, cv=10):
@@ -123,7 +123,7 @@ def CV(X, y, model, cv=10):
     }
 
 
-# In[18]:
+# In[6]:
 
 
 def IND(X, y, test_X, test_y, model):
@@ -138,7 +138,7 @@ def IND(X, y, test_X, test_y, model):
     }
 
 
-# In[19]:
+# In[7]:
 
 
 def JK(X, y, model, verbose = False):
@@ -164,13 +164,13 @@ def JK(X, y, model, verbose = False):
 
 # # Load data
 
-# In[20]:
+# In[8]:
 
 
 file_name = '../Features/rf452.npz'
 
 
-# In[21]:
+# In[9]:
 
 
 data = np.load(file_name)
@@ -183,7 +183,7 @@ test_y = data['test_y']
 print(X.shape, test_X.shape)
 
 
-# In[22]:
+# In[10]:
 
 
 sc = StandardScaler()
@@ -191,7 +191,7 @@ X = sc.fit_transform(X)
 test_X = sc.transform(test_X)
 
 
-# In[23]:
+# In[11]:
 
 
 np.max(test_X), np.max(X), np.min(test_X), np.min(X)
@@ -214,7 +214,7 @@ for name, clf in clfs.items():
     report_ind[-1]['Classifier'] = name
 
 
-# In[111]:
+# In[13]:
 
 
 report_jk = []
@@ -222,45 +222,21 @@ name = 'SVC(kernel = rbf, tuned)'
 report_jk.append(JK(X, y, clfs[name]))
 report_jk[-1]['Classifier'] = name
 
-
-# In[117]:
-
-
-clfs[name]
-
-
-# In[112]:
-
+print(clfs[name])
 
 report_cv = pd.DataFrame(report_cv)
 report_ind = pd.DataFrame(report_ind)
 report_jk = pd.DataFrame(report_jk)
 
+print(report_cv)
 
-# In[113]:
+print(report_ind)
 
-
-report_cv
-
-
-# In[114]:
+print(report_jk)
 
 
-report_ind
+# In[14]:
 
-
-# In[115]:
-
-
-report_jk
-
-
-# In[116]:
-
-
-# ranked_features.to_csv('Feature_ranking_RF.csv', index = False)
-# report_cv.to_csv('Report_CV_RF.csv', index = False)
-# report_ind.to_csv('Report_IND_RF.csv', index=False)
 
 # ranked_features.to_csv('Feature_ranking_' + file_name.split('.')[0] + '.csv', index = False)
 report_cv.to_csv('Report_CV_' + file_name.split('.')[0] + '.csv', index = False)
@@ -270,7 +246,7 @@ report_jk.to_csv('Report_JK_' + file_name.split('.')[0] + '.csv', index=False)
 
 # # Tuning
 
-# In[55]:
+# In[15]:
 
 
 # parma_dist = dict(
@@ -289,7 +265,7 @@ report_jk.to_csv('Report_JK_' + file_name.split('.')[0] + '.csv', index=False)
 # rnd.fit(X, y)
 
 
-# In[41]:
+# In[16]:
 
 
 parma_dist = dict(
@@ -310,7 +286,7 @@ print(grid.best_params_, grid.best_score_, IND(X, y, test_X, test_y, grid.best_e
 print(grid.param_grid)
 
 
-# In[51]:
+# In[17]:
 
 
 parma_dist = dict(
@@ -331,50 +307,9 @@ print(grid.best_params_, grid.best_score_, IND(X, y, test_X, test_y, grid.best_e
 print(grid.param_grid)
 
 
-# In[56]:
-
-
-# rf = rfc(random_state=0)
-# parma_dist = dict(
-#     n_estimators = np.linspace(1, 1000, 5, dtype = np.int),
-#     min_samples_leaf = np.linspace(1, 1000, 5, dtype = np.int),
-#     max_features = ['auto', 'sqrt', 'log2'],
-#     oob_score = [True, False],
-#     criterion = ['gini', 'entropy']
-# )
-
-# grid = GridSearchCV(rf,
-#                     param_grid=parma_dist,
-#                     cv=skf,
-#                     n_jobs=4,
-#                     verbose=1,
-#                     scoring='accuracy')
-
-# grid.fit(X, y)
-
-
 # # Ensemble
 
-# In[26]:
-
-
-vt = VotingClassifier(estimators=[
-    ('gnb', GaussianNB()),
-    ('adb', AdaBoostClassifier(random_state=0)),
-    ('svmrbf', SVC(C=5.44, gamma=0.00273, probability=True, random_state=0)),
-    ('ext', ExtraTreesClassifier(random_state=0))
-],
-                      voting='hard',
-                      weights=[0.3, 0.3, 0.7, 0.3])
-
-vt.fit(X, y)
-
-p = vt.predict(test_X)
-
-accuracy_score(test_y, p)
-
-
-# In[107]:
+# In[18]:
 
 
 def JKSL(X, y, verbose=False):
@@ -406,7 +341,7 @@ def JKSL(X, y, verbose=False):
     }
 
 
-# In[27]:
+# In[20]:
 
 
 # make a prediction with a stacking ensemble
@@ -425,7 +360,7 @@ level0.append((
         voting='soft',
         n_jobs=-1,
         # weights=[1, 1, 1.5]
-    )))s
+    )))
 # level0.append(('ext', ext(random_state=0)))
 level0.append(('svm(rbf, tuned)',
                SVC(kernel='rbf',
@@ -456,27 +391,49 @@ print('Predicted Specificity: %f' % specificity(test_y, yhat))
 print('Predicted MCC: %f' % matthews_corrcoef(test_y, yhat))
 
 
-# In[28]:
+# In[21]:
 
 
 print('10-Fold CV')
 print(CV(X, y, model, StratifiedKFold(n_splits=10, shuffle=True, random_state=0)))
 
+print(model)
 
-# In[108]:
+print('JK')
+print(JKSL(X, y, model))
 
 
-model
+# # Others
+
+# In[22]:
+
+
+vt = VotingClassifier(estimators=[
+    ('gnb', GaussianNB()),
+    ('adb', AdaBoostClassifier(random_state=0)),
+    ('svmrbf', SVC(C=5.44, gamma=0.00273, probability=True, random_state=0)),
+    ('ext', ExtraTreesClassifier(random_state=0))
+],
+                      voting='hard',
+                      weights=[0.3, 0.3, 0.7, 0.3])
+
+vt.fit(X, y)
+
+p = vt.predict(test_X)
+
+print(accuracy_score(test_y, p))
 
 
 # In[ ]:
 
 
-print('JK')
-JKSL(X, y, model)
+loss, bias, var = bias_variance_decomp(model, X, y, test_X, test_y, loss='0-1_loss', random_seed=0)
+print('0-1 loss: ', loss)
+print('Bias : ', bias)
+print('Variance : ', var)
 
 
-# In[106]:
+# In[26]:
 
 
 model = clfs['SVC(kernel = rbf, tuned)']
@@ -491,45 +448,9 @@ print('Mean Square Error: ', mse)
 print('Bias : ', bias)
 print('Variance : ', var)
 
-loss, bias, var = bias_variance_decomp(model, X, y, test_X, test_y, loss='0-1_loss', random_seed=0)
-print('0-1 loss: ', loss)
-print('Bias : ', bias)
-print('Variance : ', var)
-
-
-# In[66]:
-
-
-clf.intercept_
-
-
-# In[69]:
-
-
-clf.support_, len(clf.support_)
-
-
-# In[60]:
-
-
-clf.support_vectors_.
-
-
-# In[61]:
-
-
-clf.n_support_
-
-
-# In[65]:
-
-
-clf.dual_coef_[0]
-
 
 # In[ ]:
 
 
-tell brinto to run JK
-Update the accuracy table
+
 
