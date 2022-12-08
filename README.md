@@ -6,8 +6,7 @@
  The resources attached to this repository are as follows:
  1. DataSet: This folder contains the datasets used in this work. pdb1075.fasta, pdb1035.fasta, pdb186.fasta are datasets from previous work and uniprot1424.fasta, uniprot356.fasta are the proposed new benchmark datasets.
  2. Features: This folder contains the finally selected features for our super-learner model.
- 3. Images: In this folder, we have images of the distribution of our selected features.
- 4. Results: The results of our experiments are placed under this folder.
- 5. Scripts: Run the script in the script folder to generate results. Both scripts execute the same logic. One of them is a notebook another one is a python script.
+ 3. Results: The results of some of our experiments are placed under this folder as csv files. All the experimental results are available in the manuscript.
+ 4. Scripts: Run the script in the script folder to generate results. Both scripts execute the same logic. One of them is a notebook another one is a python script.
 
 
