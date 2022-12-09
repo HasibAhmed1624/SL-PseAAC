@@ -12,6 +12,6 @@ The resources attached to this repository are as follows:
  ## Run the predictor on your protein sequences
   1. Save features for the protein sequences in a .npz file.
   2. Update the `file_name` variable of the script/notebook (as per your preference) so that it references your .npz file.
-  3. Run the script.
+  3. Run the script. 
 
 
