@@ -3691,9 +3691,9 @@ clf.fit(X, y)
 test_pred = clf.predict(test_X)[0]
 
 if test_pred == 0:
-    print("The provided sequence in Non-Dna-Binding")
+    print("The provided sequence is Non-Dna-Binding")
 else:
-    print("The provided sequence in Dna-Binding")
+    print("The provided sequence is Dna-Binding")
 
 
 # In[ ]:
